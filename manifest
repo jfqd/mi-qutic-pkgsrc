@@ -1,0 +1,8 @@
+name="qutic-pkgsrc"
+organization="SmartOS"
+brand="Instance"
+version="17.4.0"
+description="A pkgsrc server that mirrors SmartOS pkgsr"
+homepage="https://github.com/jfqd/mi-qutic-pkgsrc"
+users="root admin"
+base="7463e66c-f2df-11e7-9910-c77edbdd6194"

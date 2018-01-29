@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
+
+# Exit if any commands fail
+set -o errexit
+
+# Configuring image specific packages
+echo "* Configuring image specific packages.";
+
+# svcadm enable svc:/network/ipfilter:default
+
+echo "* Create nginx ssl folder"
+mkdir -p /opt/local/etc/nginx/ssl
+
+# Clean up
+echo "* Cleaning up."
+touch /root/.bash_history
+rm /root/customize
+
+# Prepare image for provisioning
+sm-prepare-image -y

@@ -1,11 +1,11 @@
 {
   "name":         "qutic-pkgsrc",
-  "version":      "17.4.1",
+  "version":      "20181018.0",
   "description":  "A pkgsrc server that mirrors SmartOS pkgsrc",
   "organization": "qutic development",
   "brand":        "Instance",
   "homepage":     "https://github.com/jfqd/mi-qutic-pkgsrc",
-  "base":         "31ea7dee-0a8d-11e8-9d33-eb63e3201a8b",
+  "base":         "80eb3464-7ec3-11e9-8365-c32736cdd54f",
   "customer_metadata": {
     "admin_authorized_keys": {"type": "text", "description": "SSH public authorized key(s) for the admin user"},
     "root_authorized_keys":  {"type": "text", "description": "SSH public authorized key(s) for the root user"},
@@ -21,8 +21,10 @@
     "ssh_host_dsa_key":      {"type": "text", "description": "private SSH dsa key for the host daemon"},
     "ssh_host_dsa_key.pub":  {"type": "text", "description": "public SSH dsa key for the host daemon"},
     "munin_master_allow":    {"type": "text", "description": "ip addresses (alternative hostname) of the munin master node"},
+    "nagios_allow":          {"type": "text", "description": "ip addresses of the nagios server node, seperated by comma"},
+    "logstash_redis":        {"type": "text", "description": "ip addresses of the logstash redis nodes, seperated by comma and including redis-protocoll"},
     "vfstab":                {"type": "text", "description": "nfs mountpoint for vfstab-file"},
     "admin_upload_token":    {"type": "text", "description": "upload-token for the dsapid-server api"},
-    "nginx_ssl":             {"type": "text", "description": "ssl certificate for dsapid web interface"}
+    "nginx_ssl":             {"type": "text", "description": "ssl certificate for pkgsrc web interface"}
   }
 }

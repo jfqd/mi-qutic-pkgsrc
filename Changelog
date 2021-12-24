@@ -1,5 +1,9 @@
 # Changelog
 
+## 20201019.0
+
+* use latest base image
+
 ## 20181018.0
 
 * Move to pkgsrc trunk

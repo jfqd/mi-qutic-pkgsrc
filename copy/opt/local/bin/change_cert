@@ -1,0 +1,57 @@
+#!/usr/bin/bash
+
+if [[ $(uname -s) = "SunOS" ]]; then
+  # Illumos / SunOS
+  if [[ $(svcs -H nginx 2>/dev/null) ]]; then
+    # change cert for nginx
+    if [[ -f /opt/local/etc/nginx/ssl/nginx.pem ]]; then 
+      (
+        cd /opt/local/etc/nginx/ssl/;
+        openssl pkey -in nginx.pem -out nginx.key;
+        openssl crl2pkcs7 -nocrl -certfile nginx.pem | openssl pkcs7 -print_certs -out nginx.crt;
+        chmod 0600 nginx.pem;
+        chmod 0600 nginx.key;
+        svcadm restart nginx;
+      )
+    else
+      echo "nginx.pem file is missing!"
+      exit 1
+    fi
+  fi
+  if [[ $(svcs -H apache 2>/dev/null) ]]; then
+    # change cert for apache
+    NAME=$(basename /opt/local/etc/httpd/ssl/*.pem .pem)
+    if [[ -n "${NAME}" ]]; then
+      (
+        cd /opt/local/etc/httpd/ssl/
+        openssl pkey -in ${NAME}.pem -out ${NAME}.key
+        openssl crl2pkcs7 -nocrl -certfile ${NAME}.pem | openssl pkcs7 -print_certs -out ${NAME}.crt
+        chmod 0600 ${NAME}.key
+        chmod 0600 ${NAME}.pem
+        svcadm restart apache
+      )
+    else
+      echo "pem file is missing!"
+      exit 1
+    fi
+  fi
+  if [[ $(svcs -H sentinel 2>/dev/null) ]]; then
+    # change cert for redis/sentinel
+    if [[ -f /opt/local/etc/tls/redis.pem ]]; then 
+      (
+        cd /opt/local/etc/tls/
+        openssl pkey -in redis.pem -out redis.key
+        openssl crl2pkcs7 -nocrl -certfile redis.pem | openssl pkcs7 -print_certs -out redis.crt
+        chmod 0640 redis.*
+        chown -R redis:redis ../
+        svcadm restart pkgsrc/redis
+        svcadm restart sentinel
+      )
+    else
+      echo "redis.pem file is missing!"
+      exit 1
+    fi
+  fi
+fi
+
+exit 0
